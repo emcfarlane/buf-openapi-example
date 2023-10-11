@@ -1,0 +1,92 @@
+# Generated with protoc-gen-openapi
+# https://github.com/google/gnostic/tree/master/cmd/protoc-gen-openapi
+
+openapi: 3.0.3
+info:
+    title: LibraryService API
+    version: 0.0.1
+paths:
+    /v1/shelves/{shelf}/books/{book}:
+        get:
+            tags:
+                - LibraryService
+            description: Gets a book.
+            operationId: LibraryService_GetBook
+            parameters:
+                - name: shelf
+                  in: path
+                  description: The shelf id.
+                  required: true
+                  schema:
+                    type: string
+                - name: book
+                  in: path
+                  description: The book id.
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Book'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+components:
+    schemas:
+        Book:
+            type: object
+            properties:
+                name:
+                    type: string
+                    description: |-
+                        Resource name of the book. It must have the format of "shelves/*/books/*".
+                         For example: "shelves/shelf1/books/book2".
+                parent:
+                    type: string
+                title:
+                    type: string
+                    description: The title of the book.
+                author:
+                    type: string
+                    description: The name of the author.
+                description:
+                    type: string
+                    description: The description of the book.
+                labels:
+                    type: object
+                    additionalProperties:
+                        type: string
+                    description: Resource labels to represent user provided metadata.
+        GoogleProtobufAny:
+            type: object
+            properties:
+                '@type':
+                    type: string
+                    description: The type of the serialized message.
+            additionalProperties: true
+            description: Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+        Status:
+            type: object
+            properties:
+                code:
+                    type: integer
+                    description: The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
+                    format: int32
+                message:
+                    type: string
+                    description: A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+                details:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/GoogleProtobufAny'
+                    description: A list of messages that carry the error details.  There is a common set of message types for APIs to use.
+            description: 'The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).'
+tags:
+    - name: LibraryService

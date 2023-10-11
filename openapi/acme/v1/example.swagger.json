@@ -1,0 +1,114 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "acme/v1/example.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "LibraryService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/{name}": {
+      "get": {
+        "summary": "Gets a book.",
+        "operationId": "LibraryService_GetBook",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/exampleBook"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "name",
+            "description": "Resource name of a book. For example: \"shelves/shelf1/books/book2\".",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "pattern": "shelves/[^/]+/books/[^/]+"
+          }
+        ],
+        "tags": [
+          "LibraryService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "exampleBook": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Resource name of the book. It must have the format of \"shelves/*/books/*\".\nFor example: \"shelves/shelf1/books/book2\"."
+        },
+        "parent": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the book."
+        },
+        "author": {
+          "type": "string",
+          "description": "The name of the author."
+        },
+        "description": {
+          "type": "string",
+          "description": "The description of the book."
+        },
+        "labels": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Resource labels to represent user provided metadata."
+        }
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    }
+  }
+}
