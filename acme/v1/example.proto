@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package acme.v1.example;
+
+option go_package = "acme.com/example";
+
+import "google/api/annotations.proto";
+
+service LibraryService {
+  // Gets a book.
+  rpc GetBook(GetBookRequest) returns (Book) {
+    option (google.api.http) = {
+      get : "/v1/{name=shelves/*/books/*}"
+    };
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+}
+
+message Book {
+  // Resource name of the book. It must have the format of "shelves/*/books/*".
+  // For example: "shelves/shelf1/books/book2".
+  string name = 1;
+  string parent = 2;
+  // The title of the book.
+  string title = 5;
+  // The name of the author.
+  string author = 6;
+  // The description of the book.
+  string description = 7;
+  // Resource labels to represent user provided metadata.
+  map<string, string> labels = 8;
+}
+
+message GetBookRequest {
+  // Resource name of a book. For example: "shelves/shelf1/books/book2".
+  string name = 1;
+}
